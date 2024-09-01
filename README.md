@@ -1,6 +1,9 @@
 # EU-Data-Analysis
 The goal is to create a recommendation algorithm to recommend the best country in Europe for a specific profile.
 
+Obviously this algortihms would be targeted at EU residents as the law make it easy and we don't have to take visas into account.
+(Even tho some countries still have laws and quotas to limit inter EU migrations)
+
 My main two ideas are :
 - find the people's criteria and which countries they live in to train an ai model that can predict the current profile best country
    * cons : no explaination as to why and not able to show statistics based on criterias, need a lot of data
