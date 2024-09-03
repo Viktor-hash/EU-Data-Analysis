@@ -70,6 +70,65 @@ It seems like after considering the different responses I decided to have a try 
 
 ### TOPSIS method
 
+
+#### Criterias/Weights
+
+The weight will be evaluate with the following values :
+- MAX = 4
+- HIGH = 3
+- MEDIUM = 2
+- LOW = 1
+
+The following criterias will be asked : 
+
+I. Economic Factors
+
+Cost of living: Can the person afford the living expenses, including housing, food, transportation, and healthcare?
+Job opportunities: Are there job opportunities in the person's field, and what are the salary ranges?
+Taxes: What are the tax implications for the person, including income tax, sales tax, and other taxes?
+
+II. Safety and Security
+
+Crime rate: Is the country considered safe, with low crime rates?
+Terrorism and conflict: Is the country prone to terrorism or conflict?
+Natural disasters: Is the country vulnerable to natural disasters, such as earthquakes, hurricanes, or floods?
+
+III. Culture and Lifestyle
+
+Language: Is the official language spoken by the person, or are there opportunities to learn the language?
+Cultural norms: Are the cultural norms and values aligned with the person's own values and lifestyle?
+Social life: Are there opportunities to socialize and connect with like-minded people?
+
+IV. Education and Healthcare
+
+Education system: Is the education system of high quality, with access to good schools and universities?
+Healthcare system: Is the healthcare system of high quality, with access to good medical facilities and services?
+Access to specialized care: Are there specialized medical services available, such as mental health services or specialized medical treatments?
+
+V. Environment and Climate
+
+Climate: Is the climate suitable for the person, with comfortable temperatures and minimal extreme weather conditions?
+Environmental quality: Is the air and water quality good, with minimal pollution?
+Access to nature: Are there opportunities to connect with nature, such as parks, beaches, or mountains?
+
+VI. Visa and Immigration Requirements
+
+Visa requirements: Are the visa requirements straightforward, with minimal bureaucratic hurdles?
+Immigration process: Is the immigration process efficient, with clear guidelines and timelines?
+Citizenship opportunities: Are there opportunities to obtain citizenship, with clear requirements and benefits?
+
+VII. Infrastructure and Transportation
+
+Transportation options: Are there reliable and efficient transportation options, such as public transportation, airports, or roads?
+Internet and communication: Is the internet and communication infrastructure reliable and fast?
+Access to amenities: Are there amenities such as shopping centers, restaurants, and entertainment options available?
+
+VIII. Personal Freedoms
+
+Freedom of speech: Is there freedom of speech, with minimal censorship or restrictions?
+LGBTQ+ rights: Are LGBTQ+ rights protected, with minimal discrimination or persecution?
+Women's rights: Are women's rights protected, with minimal discrimination or inequality?
+
 Reference : https://web.archive.org/web/20180603090537id_/http://www.ijrter.com/papers/volume-3/issue-3/study-approach-technique-for-order-of-preference-by-similarity-to-ideal-solution-topsis.pdf
 
 Analysis of EU data coming from Eurostat website : https://ec.europa.eu/eurostat/databrowser/explore/all/all_themes?lang=en&display=list&sort=category
