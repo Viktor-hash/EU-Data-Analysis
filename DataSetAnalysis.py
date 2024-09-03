@@ -61,13 +61,14 @@ class Profile:
 
     def __init__(self, unsafetyTolerance: Tolerance,
                  migrantsTolerance: Tolerance, age: int, sex: Sex,
-                 countryOfOrigin: str):
+                 countryOfOrigin: str, healthCareNeed: Tolerance):
         self.age = age
         self.migrantsTolerance = migrantsTolerance
         self.sex = sex
         self.countryOfOrigin = countryOfOrigin
         self.unsafetyTolerance = unsafetyTolerance
         self.dicOfMatchingCountries = {}
+        self.healthCareNeed = healthCareNeed
 
     def addMatchingCountry(self, analysis: str, countries: list):
         self.dicOfMatchingCountries[analysis] = countries
@@ -76,6 +77,7 @@ class Profile:
         return self.dicOfMatchingCountries
 
 
+# Data set analysis class base class
 class DataSetAnalysis:
 
     def __init__(self, filePath: str, profile: Profile):
@@ -84,6 +86,25 @@ class DataSetAnalysis:
         self.profile = profile
 
 
+class HealthAnalysis(DataSetAnalysis):
+
+    def __init__(self, profile: Profile):
+        super().__init__(
+            'C:\data analysis best country in europe\demo_pjan_tabular.tsv\demo_pjan_tabular.tsv',
+            profile)
+
+
+# Age analysis class that creates the data set
+class AgeAnalysis(DataSetAnalysis):
+
+    def __init__(self, profile: Profile):
+        super().__init__(
+            'C:\data analysis best country in europe\demo_pjan_tabular.tsv\demo_pjan_tabular.tsv',
+            profile)
+        self.CreateDataSet()
+
+
+# Demography analysis class that creates the data set
 class DemographyAnalysis(DataSetAnalysis):
 
     def __init__(self, profile: Profile):
@@ -136,6 +157,7 @@ class DemographyAnalysis(DataSetAnalysis):
         return self.dfMerged
 
 
+# Migrants analysis class that creates the data set and filters it by the migrants tolerance
 class MigrantsAnalysis(DataSetAnalysis):
 
     def __init__(self, profile: Profile):
@@ -145,6 +167,8 @@ class MigrantsAnalysis(DataSetAnalysis):
         self.demographyAnalysis = DemographyAnalysis(profile)
         self.CreateDataSet()
 
+    # Create the data set by merging the demography data set with the migrants data set
+    # The data set is then filtered by the migrants tolerance on the percentage of migrants
     def CreateDataSet(self):
         dataSetTsvLeft = self.dataSetTsv.iloc[:, 0].str.split(',', expand=True)
         dataSetTsvLeft.columns = self.dataSetTsv.columns[0].split(',')
@@ -220,8 +244,13 @@ class MigrantsAnalysis(DataSetAnalysis):
         self.profile.addMatchingCountry('migrants', listMatchingCountries)
 
 
-jeanneProfile = Profile(Tolerance.LOW, Tolerance.LOW, 24, Sex.FEMALE,
-                        'Hong Kong')
+jeanneProfile = Profile(
+    Tolerance.LOW,
+    Tolerance.LOW,
+    24,
+    Sex.FEMALE,
+    'Hong Kong',
+)
 
 MigrantsAnalysis(jeanneProfile).addMatchingCountriesToProfile()
 
