@@ -66,6 +66,12 @@ Remember to consider the limitations and uncertainties associated with the data 
 
 It seems like after considering the different responses I decided to have a try with the TOPSIS technique first on a limited amount of criterias.
 
+## Application
+
+### TOPSIS method
+
+Reference : https://web.archive.org/web/20180603090537id_/http://www.ijrter.com/papers/volume-3/issue-3/study-approach-technique-for-order-of-preference-by-similarity-to-ideal-solution-topsis.pdf
+
 Analysis of EU data coming from Eurostat website : https://ec.europa.eu/eurostat/databrowser/explore/all/all_themes?lang=en&display=list&sort=category
 
 List of useful websites :
