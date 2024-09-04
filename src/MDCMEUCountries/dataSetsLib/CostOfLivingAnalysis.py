@@ -7,7 +7,7 @@ import numpy as np
 from profile.criterias import Sex, Weight
 
 
-# Demography analysis class that creates the data set
+# Cost of living analysis class that creates the data set
 class CostOfLivingAnalysis(DataSetBase):
 
     def __init__(self, profile: Profile):

@@ -2,7 +2,12 @@ from enum import Enum
 
 
 class Weight(Enum):
-    MAX = 4
-    HIGH = 3
-    MEDIUM = 2
-    LOW = 1
+    MAX_MORE = 4
+    HIGH_MORE = 3
+    MEDIUM_MORE = 2
+    LOW_MORE = 1
+    NEUTRAL = 0
+    LOW_LESS = -1
+    MEDIUM_LESS = -2
+    HIGH_LESS = -3
+    MAX_LESS = -4

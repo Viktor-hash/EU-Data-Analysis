@@ -1,43 +1,70 @@
 from profile import Profile
 import numpy as np
-from profile.criterias import Sex, Weight
+from profile.criterias import Sex, Weight, IncomeLevel
 from dataSetsLib import CostOfLivingAnalysis
 from dataSetsLib import MigrantsAnalysis
+from dataSetsLib import TaxAnalysis
+from dataSetsLib import EarningsAnalysis
 import pandas as pd
 from sklearn.preprocessing import normalize
 
-jeanneProfile = Profile(migrantsWeight=Weight.LOW,
-                        unsafetyWeight=Weight.LOW,
-                        age=24,
-                        sex=Sex.FEMALE,
-                        countryOfOrigin='Hong Kong',
-                        healthWeight=Weight.LOW,
-                        costOfLivingWeight=Weight.MEDIUM)
+michaelProfile = Profile(age=41,
+                         sex=Sex.MALE,
+                         countryOfOrigin='Hong Kong',
+                         incomeLevel=IncomeLevel.HIGH,
+                         costOfLivingWeight=Weight.MEDIUM_LESS,
+                         taxWeight=Weight.HIGH_LESS,
+                         earningWeight=Weight.HIGH_MORE,
+                         migrantsWeight=Weight.HIGH_LESS,
+                         healthWeight=Weight.MEDIUM_MORE,
+                         unsafetyWeight=Weight.MEDIUM_LESS)
 
-costOfLiving = CostOfLivingAnalysis(jeanneProfile).getDataSet()
-migrants = MigrantsAnalysis(jeanneProfile).getDataSet()
+# Economic analysis
+costOfLiving = CostOfLivingAnalysis(michaelProfile).getDataSet()
+taxLevel = TaxAnalysis(michaelProfile).getDataSet()
+earningLevel = EarningsAnalysis(michaelProfile).getDataSet()
+
+print(earningLevel)
+
+# Safety and Security
+
+# Culture and lifestyle
+migrants = MigrantsAnalysis(michaelProfile).getDataSet()
+
+# Education and Healthcare
+
+# Environment and Climate
+
+# Visa and Immigration Requirements
+
+# Infrastructure and Transportation
+
+# Personal Freedoms
 
 matrix = pd.merge(costOfLiving, migrants, on=['geo'], how='inner')
 
-print(matrix)
+matrix = pd.merge(matrix, taxLevel, on=['geo'], how='inner')
 
 # select the columns to normalize
-columns_to_normalize = ['costOfLiving', 'numberOfMigrants']
+columns_to_normalize = ['costOfLiving', 'numberOfMigrants', 'taxLevel']
 
 # normalize the selected columns
 df_normalized = matrix.copy()
 df_normalized[columns_to_normalize] = normalize(
     matrix[columns_to_normalize].values, axis=0)
 
-print(df_normalized)
+df_normalized['costOfLiving'] = df_normalized['costOfLiving'].mul(
+    michaelProfile.migrantsWeight.value)
 
-df_normalized['costOfLiving'] = df_normalized['costOfLiving'].mul(4)
+df_normalized['numberOfMigrants'] = df_normalized['numberOfMigrants'].mul(
+    michaelProfile.migrantsWeight.value)
 
-df_normalized['numberOfMigrants'] = df_normalized['numberOfMigrants'].mul(-4)
+df_normalized['taxLevel'] = df_normalized['taxLevel'].mul(
+    michaelProfile.taxWeight.value)
 
-print(df_normalized)
-
-weighted_matrix = df_normalized[['costOfLiving', 'numberOfMigrants']]
+weighted_matrix = df_normalized[[
+    'costOfLiving', 'numberOfMigrants', 'taxLevel'
+]]
 
 # calculate the ideal solution (IS) and negative ideal solution (NIS)
 IS = weighted_matrix.max()
@@ -55,4 +82,4 @@ result = pd.concat([df_normalized['geo'], RC], axis=1)
 ranked_alternatives = result.sort_values(by='Relative Closeness',
                                          ascending=False)
 
-print(ranked_alternatives)
+#print(ranked_alternatives)
