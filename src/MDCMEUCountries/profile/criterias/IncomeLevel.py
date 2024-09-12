@@ -3,5 +3,5 @@ from enum import Enum
 
 class IncomeLevel(Enum):
     LOW = "P25"
-    MIDDLE = "MED"
+    MID = "MED"
     HIGH = "P75"

@@ -7,79 +7,45 @@ from dataSetsLib import TaxAnalysis
 from dataSetsLib import EarningsAnalysis
 import pandas as pd
 from sklearn.preprocessing import normalize
+from profile.criterias import Sex, Weight, IncomeLevel, Preference
+from profile.criterias import PersonalSelector, CriteriaSelector
+from calculations import RankingCalculations
 
-michaelProfile = Profile(age=41,
-                         sex=Sex.MALE,
-                         countryOfOrigin='Hong Kong',
-                         incomeLevel=IncomeLevel.HIGH,
-                         costOfLivingWeight=Weight.MEDIUM_LESS,
-                         taxWeight=Weight.HIGH_LESS,
-                         earningWeight=Weight.HIGH_MORE,
-                         migrantsWeight=Weight.HIGH_LESS,
-                         healthWeight=Weight.MEDIUM_MORE,
-                         unsafetyWeight=Weight.MEDIUM_LESS)
+michaelPersonalSelector = PersonalSelector(
+    age=24,
+    sex=Sex.MALE,
+    countryOfOrigin='India',
+    incomeLevel=IncomeLevel.MID,
+)
 
-# Economic analysis
-costOfLiving = CostOfLivingAnalysis(michaelProfile).getDataSet()
-taxLevel = TaxAnalysis(michaelProfile).getDataSet()
-earningLevel = EarningsAnalysis(michaelProfile).getDataSet()
+michaelCostOfLiving = CriteriaSelector(
+    preference=Preference.HIGH,
+    weight=Weight.HIGH,
+)
 
-print(earningLevel)
+michaelTaxs = CriteriaSelector(
+    preference=Preference.HIGH,
+    weight=Weight.HIGH,
+)
 
-# Safety and Security
+michaelMigrants = CriteriaSelector(
+    preference=Preference.MID,
+    weight=Weight.MID,
+)
 
-# Culture and lifestyle
-migrants = MigrantsAnalysis(michaelProfile).getDataSet()
+michaelEarnings = CriteriaSelector(
+    preference=Preference.LOW,
+    weight=Weight.MID,
+)
 
-# Education and Healthcare
+michaelProfile = Profile(personalSelector=michaelPersonalSelector,
+                         costOfLiving=michaelCostOfLiving,
+                         taxs=michaelTaxs,
+                         migrants=michaelMigrants,
+                         earnings=michaelEarnings)
 
-# Environment and Climate
+ranking = RankingCalculations(
+    michaelProfile,
+    ['costOfLiving', 'taxs', 'migrants', 'earnings']).getRanking()
 
-# Visa and Immigration Requirements
-
-# Infrastructure and Transportation
-
-# Personal Freedoms
-
-matrix = pd.merge(costOfLiving, migrants, on=['geo'], how='inner')
-
-matrix = pd.merge(matrix, taxLevel, on=['geo'], how='inner')
-
-# select the columns to normalize
-columns_to_normalize = ['costOfLiving', 'numberOfMigrants', 'taxLevel']
-
-# normalize the selected columns
-df_normalized = matrix.copy()
-df_normalized[columns_to_normalize] = normalize(
-    matrix[columns_to_normalize].values, axis=0)
-
-df_normalized['costOfLiving'] = df_normalized['costOfLiving'].mul(
-    michaelProfile.migrantsWeight.value)
-
-df_normalized['numberOfMigrants'] = df_normalized['numberOfMigrants'].mul(
-    michaelProfile.migrantsWeight.value)
-
-df_normalized['taxLevel'] = df_normalized['taxLevel'].mul(
-    michaelProfile.taxWeight.value)
-
-weighted_matrix = df_normalized[[
-    'costOfLiving', 'numberOfMigrants', 'taxLevel'
-]]
-
-# calculate the ideal solution (IS) and negative ideal solution (NIS)
-IS = weighted_matrix.max()
-NIS = weighted_matrix.min()
-
-# calculate the distance from the ideal solution (DIS) and distance from the negative ideal solution (DNIS)
-DIS = np.sqrt(np.sum((weighted_matrix - IS)**2, axis=1))
-DNI = np.sqrt(np.sum((weighted_matrix - NIS)**2, axis=1))
-
-# calculate the relative closeness (RC)
-RC = pd.DataFrame(DNI / (DIS + DNI), columns=['Relative Closeness'])
-
-result = pd.concat([df_normalized['geo'], RC], axis=1)
-
-ranked_alternatives = result.sort_values(by='Relative Closeness',
-                                         ascending=False)
-
-#print(ranked_alternatives)
+print(ranking)

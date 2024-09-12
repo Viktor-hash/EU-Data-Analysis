@@ -2,9 +2,6 @@ from .DataSetBase import DataSetBase
 from profile.Profile import Profile
 from .constants.CountriesDic import abreviationToCountry
 import pandas as pd
-import numpy as np
-
-from profile.criterias import Sex, Weight
 
 
 # Cost of living analysis class that creates the data set
@@ -41,6 +38,8 @@ class CostOfLivingAnalysis(DataSetBase):
         dfMerged = dfMerged[~dfMerged['2023'].str.contains(":")]
 
         dfMerged.rename(columns={'2023': 'costOfLiving'}, inplace=True)
+
+        dfMerged['costOfLiving'] = dfMerged['costOfLiving'].astype(float)
 
         self.dfMerged = dfMerged
 

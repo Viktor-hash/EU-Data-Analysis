@@ -1,25 +1,27 @@
-from .criterias.Weight import Weight
-from .criterias.Sex import Sex
-from .criterias.IncomeLevel import IncomeLevel
+from .criterias.PersonalSelector import PersonalSelector
+from .criterias.CriteriaSelector import CriteriaSelector
 
 
 class Profile:
 
-    def __init__(self, unsafetyWeight: Weight, migrantsWeight: Weight,
-                 age: int, sex: Sex, countryOfOrigin: str,
-                 healthWeight: Weight, costOfLivingWeight: Weight,
-                 incomeLevel: IncomeLevel, taxWeight: Weight,
-                 earningWeight: Weight):
+    def __init__(self, personalSelector: PersonalSelector,
+                 costOfLiving: CriteriaSelector, taxs: CriteriaSelector,
+                 migrants: CriteriaSelector, earnings: CriteriaSelector):
         # Personal criterias
-        self.age = age
-        self.countryOfOrigin = countryOfOrigin
-        self.sex = sex
-        self.incomeLevel = incomeLevel
+        self.personalSelector = personalSelector
 
-        # Criterias/Weights
-        self.migrantsWeight = migrantsWeight
-        self.unsafetyWeight = unsafetyWeight
-        self.healthWeight = healthWeight
-        self.costOfLivingWeight = costOfLivingWeight
-        self.taxWeight = taxWeight
-        self.earningWeight = earningWeight
+        # Preferences and Weights
+        self.migrants = migrants
+        self.costOfLiving = costOfLiving
+        self.taxs = taxs
+        self.earnings = earnings
+
+    def getPreferences(self, dataSet: str):
+        if (dataSet == 'costOfLiving'):
+            return self.costOfLiving
+        elif (dataSet == 'taxs'):
+            return self.taxs
+        elif (dataSet == 'migrants'):
+            return self.migrants
+        elif (dataSet == 'earnings'):
+            return self.earnings

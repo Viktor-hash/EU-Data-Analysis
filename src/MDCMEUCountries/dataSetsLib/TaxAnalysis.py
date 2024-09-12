@@ -4,8 +4,6 @@ from .constants.CountriesDic import abreviationToCountry
 import pandas as pd
 import numpy as np
 
-from profile.criterias import Sex, Weight
-
 
 # Tax analysis class that creates the data set
 class TaxAnalysis(DataSetBase):
@@ -13,17 +11,18 @@ class TaxAnalysis(DataSetBase):
     def __init__(self, profile: Profile):
         super().__init__(
             r'C:\data analysis best country in europe\tax\tax.tsv', profile)
-        if (self.profile.age < 35):
+        age = profile.personalSelector.age
+        if (age < 35):
             self.agetreshold = "Y_LT35"
-        elif (self.profile.age >= 35 and self.profile.age < 45):
+        elif (age >= 35 and age < 45):
             self.agetreshold = "Y35-44"
-        elif (self.profile.age >= 45 and self.profile.age < 55):
+        elif (age >= 45 and age < 55):
             self.agetreshold = "Y45-54"
-        elif (self.profile.age >= 55 and self.profile.age < 65):
+        elif (age >= 55 and age < 65):
             self.agetreshold = "Y55-64"
-        elif (self.profile.age >= 65 and self.profile.age < 75):
+        elif (age >= 65 and age < 75):
             self.agetreshold = "Y65-74"
-        elif (self.profile.age >= 75):
+        elif (age >= 75):
             self.agetreshold = "Y_GE75"
         self.CreateDataSet()
 
@@ -40,7 +39,7 @@ class TaxAnalysis(DataSetBase):
         dfMerged.columns = dfMerged.columns.str.replace(' ', '')
 
         dfMerged = dfMerged[dfMerged['quantile'] ==
-                            self.profile.incomeLevel.value]
+                            self.profile.personalSelector.incomeLevel.value]
 
         dfMerged = dfMerged[dfMerged['age'] == self.agetreshold]
 
@@ -72,7 +71,7 @@ class TaxAnalysis(DataSetBase):
 
         dfMerged = dfMerged[['geo', '2020']]
 
-        dfMerged.rename(columns={'2020': 'taxLevel'}, inplace=True)
+        dfMerged.rename(columns={'2020': 'taxs'}, inplace=True)
 
         self.dfMerged = dfMerged
 

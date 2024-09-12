@@ -83,8 +83,7 @@ class MigrantsAnalysis(DataSetBase):
 
         dfMerged = dfMerged[['geo', 'percentage']]
 
-        dfMerged.rename(columns={'percentage': 'numberOfMigrants'},
-                        inplace=True)
+        dfMerged.rename(columns={'percentage': 'migrants'}, inplace=True)
 
         self.dfMerged = dfMerged
 
