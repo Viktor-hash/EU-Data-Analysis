@@ -64,22 +64,39 @@ Remember to consider the limitations and uncertainties associated with the data 
 
 ### Temporary choice
 
-It seems like after considering the different responses I decided to have a try with the TOPSIS technique first on a limited amount of criterias.
+I m going with my own ranking function as the other method are not specific and simple enough.
+
+The function will look like something like this for two criterias of one alternative (e.g earnings and tax):
+
+w(x) = weight of x
+w(y) = weight of y
+x = earnings criteria
+y = tax criteria 
+
+for every criteria (I am taking x as an example here):
+- if preference is LOW then we do x = 1/x
+- if preference is MID then we do x = 1/abs(x - mean(allAlternativeOfx))
+
+f(x,y) = w(x) * x + w(y) * y
+
+Doing this for every alternatives will give a ranking that can be sorted by descending order.
 
 ## Application
 
-### TOPSIS method
+#### Perference/Weights
 
+The weight will be evaluated by the following values :
+- HIGH
+- MID
+- LOW
+- NEUTRAL
 
-#### Criterias/Weights
+The preference will be evaluated by the following values :
+- HIGH
+- MID
+- LOW
 
-The weight will be evaluate with the following values :
-- MAX = 4
-- HIGH = 3
-- MEDIUM = 2
-- LOW = 1
-
-The following criterias will be asked : 
+The following preferences/weights will be asked : 
 
 I. Economic Factors
 
